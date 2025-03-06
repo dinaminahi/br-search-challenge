@@ -1,6 +1,6 @@
 "use client";
-import { formatDateRange } from "@/modules/shared/utils/jsUtils";
-import { AutocompleteInput, DebouncedInput } from "../../shared/components";
+import { AutocompleteInput, DebouncedInput } from "@/modules/shared/components";
+import { SearchResultList } from "./components/SearchResultList";
 
 const SearchPage = ({ searchResults, searchState }) => {
   console.log("SearchPage Props", searchResults, searchState);
@@ -20,7 +20,7 @@ const SearchPage = ({ searchResults, searchState }) => {
           apiEndpoint="/api/locations"
           initialValue={searchState.scopes.location}
           getOptionLabel={(item) => item.label}
-          getSuggestionValue={(item) => item.label} // add for 2 level
+          getSuggestionValue={(item) => item.label}
         />
         <DebouncedInput
           label="keywords"
@@ -30,24 +30,13 @@ const SearchPage = ({ searchResults, searchState }) => {
       </div>
       <div className="space-y-4 p-6 max-w-2xl mx-auto">
         {searchResults?.hits.length ? (
-          <h1 className="text-lg text-gray-700">Results:</h1>
+          <>
+            <h1 className="text-lg text-gray-700">Results:</h1>
+            <SearchResultList items={searchResults.hits} />
+          </>
         ) : (
           <h1 className="text-lg text-gray-700">No results...</h1>
         )}
-        <ul className="list-disc list-inside text-sm text-gray-700 leading-relaxed">
-          {searchResults?.hits?.map((item) => (
-            <li
-              key={item.id}
-              className="flex flex-col gap-2 shadow-lg rounded-lg p-4"
-            >
-              <strong className="text-base">{item.name}</strong>
-              {formatDateRange(
-                item.dates?.[0].startDate,
-                item.dates?.[0].endDate
-              )}
-            </li>
-          ))}
-        </ul>
       </div>
     </div>
   );

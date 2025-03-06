@@ -1,4 +1,4 @@
-import { SearchPage } from '@/modules/search/components'
+import { SearchPage } from '@/modules/search/components/SearchPage'
 import { searchRetreats } from '@/modules/search/actions'
 
 export default async ({ searchParams }) => {

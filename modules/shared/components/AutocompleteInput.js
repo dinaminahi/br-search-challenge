@@ -1,6 +1,6 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useDebounce } from "../hooks";
+import { useDebounce } from "@/modules/shared/hooks";
 
 export function AutocompleteInput({
   label,

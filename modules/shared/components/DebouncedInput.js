@@ -1,6 +1,6 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { useDebounce } from "../hooks";
+import { useCallback, useEffect, useState } from "react";
+import { useDebounce } from "@/modules/shared/hooks";
 
 export function DebouncedInput({ label, urlKey, initialValue }) {
   const [query, setQuery] = useState(initialValue ?? "");
