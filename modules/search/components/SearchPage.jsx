@@ -6,7 +6,7 @@ const SearchPage = ({ searchResults, searchState }) => {
   console.log("SearchPage Props", searchResults, searchState);
 
   return (
-    <div className="max-w-5xl mx-5 my-5">
+    <div className="max-w-5xl mx-5 md:mx-auto my-5">
       <div className="flex flex-col md:flex-row items-center justify-center gap-4 mx-auto mb-5">
         <AutocompleteInput
           label="category"
@@ -28,13 +28,13 @@ const SearchPage = ({ searchResults, searchState }) => {
           initialValue={searchState.searchQuery}
         />
       </div>
-      <div class="space-y-4 p-6 max-w-2xl mx-auto">
+      <div className="space-y-4 p-6 max-w-2xl mx-auto">
         {searchResults?.hits.length ? (
           <h1 className="text-lg text-gray-700">Results:</h1>
         ) : (
           <h1 className="text-lg text-gray-700">No results...</h1>
         )}
-        <ul class="list-disc list-inside text-sm text-gray-700 leading-relaxed">
+        <ul className="list-disc list-inside text-sm text-gray-700 leading-relaxed">
           {searchResults?.hits?.map((item) => (
             <li
               key={item.id}

@@ -12,7 +12,7 @@ export function AutocompleteInput({
   const [query, setQuery] = useState(initialValue ?? "");
   const [suggestions, setSuggestions] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
-  const [selectionMade, setSelectionMade] = useState(false);
+  const [selectionMade, setSelectionMade] = useState(!!initialValue);
 
   const debouncedQuery = useDebounce(query, 500);
 
@@ -32,7 +32,7 @@ export function AutocompleteInput({
   );
 
   const handleSelectSuggestion = (item) => {
-    setQuery(item.name);
+    setQuery(getSuggestionValue(item));
     setShowDropdown(false);
     setSelectionMade(true);
     const newQueryString = createQueryString(
@@ -52,6 +52,8 @@ export function AutocompleteInput({
     if (query.trim() === "") {
       setSuggestions([]);
       setShowDropdown(false);
+      const newQueryString = createQueryString(`scopes[${label}]`, "");
+      router.push(`${pathname}?${newQueryString}`);
       return;
     }
 
