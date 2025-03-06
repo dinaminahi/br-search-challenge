@@ -20,9 +20,6 @@ export function DebouncedInput({ label, urlKey, initialValue }) {
   );
 
   useEffect(() => {
-    if(debouncedQuery.trim() === "") {
-        return;
-    }
     const newQueryString = createQueryString(urlKey, debouncedQuery);
     router.push(`${pathname}?${newQueryString}`);
   }, [debouncedQuery]);
