@@ -2,13 +2,22 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useDebounce } from "../hooks";
 
-export function AutocompleteInput({ label, apiEndpoint, getOptionLabel }) {
-  const [query, setQuery] = useState("");
+export function AutocompleteInput({
+  label,
+  apiEndpoint,
+  initialValue,
+  getOptionLabel,
+  getSuggestionValue,
+}) {
+  const [query, setQuery] = useState(initialValue ?? "");
   const [suggestions, setSuggestions] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
-  const debouncedQuery = useDebounce(query, 500)
+  const [selectionMade, setSelectionMade] = useState(false);
+
+  const debouncedQuery = useDebounce(query, 500);
 
   const inputRef = useRef(null);
+
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -25,7 +34,11 @@ export function AutocompleteInput({ label, apiEndpoint, getOptionLabel }) {
   const handleSelectSuggestion = (item) => {
     setQuery(item.name);
     setShowDropdown(false);
-    const newQueryString = createQueryString(`scopes[${label}]`, item.name);
+    setSelectionMade(true);
+    const newQueryString = createQueryString(
+      `scopes[${label}]`,
+      getSuggestionValue(item)
+    );
     router.push(`${pathname}?${newQueryString}`);
   };
 
@@ -39,6 +52,11 @@ export function AutocompleteInput({ label, apiEndpoint, getOptionLabel }) {
     if (query.trim() === "") {
       setSuggestions([]);
       setShowDropdown(false);
+      return;
+    }
+
+    if (selectionMade) {
+      setSelectionMade(false);
       return;
     }
 
