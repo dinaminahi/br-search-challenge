@@ -28,7 +28,7 @@ export function DebouncedInput({ label, urlKey, initialValue }) {
   }, [debouncedQuery]);
 
   return (
-    <div className="relative">
+    <div className="relative w-full md:w-48">
       <label className="block mb-1 text-gray-600">{label}</label>
       <input
         type="text"

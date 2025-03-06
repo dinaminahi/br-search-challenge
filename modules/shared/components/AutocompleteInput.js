@@ -75,7 +75,7 @@ export function AutocompleteInput({
   }, [debouncedQuery, apiEndpoint]);
 
   return (
-    <div className="relative">
+    <div className="relative w-full md:w-48">
       <label className="block mb-1 text-gray-600">{label}</label>
       <input
         type="text"
@@ -86,7 +86,7 @@ export function AutocompleteInput({
         className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
       />
       {showDropdown && suggestions.length > 0 && (
-        <ul className="absolute left-0 w-full mt-1 bg-white border rounded-lg shadow-md">
+        <ul className="absolute left-0 w-full mt-1 bg-white border rounded-lg shadow-md z-10">
           {suggestions.map((item, index) => (
             <li
               key={index}
