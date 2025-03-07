@@ -120,15 +120,10 @@ export const stringifyQuery = (obj, options) => {
 };
 
 export const formatDateRange = (startDate, endDate) => {
-  const options = { month: "long", day: "numeric", year: "numeric" };
-
   const start = new Date(startDate);
   const end = new Date(endDate);
 
-  const startFormatted = start.toLocaleDateString("en-US", options);
-  const endFormatted = end.toLocaleDateString("en-US", options);
-
-  const startMonth = start.toLocaleDateString("en-US", { month: "long" });
+  const startMonth = start.toLocaleDateString("en-US", { month: "short" });
   const startDay = start.getDate();
   const endDay = end.getDate();
   const endYear = end.getFullYear();

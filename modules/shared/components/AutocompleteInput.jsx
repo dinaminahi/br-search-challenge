@@ -25,7 +25,13 @@ export function AutocompleteInput({
   const createQueryString = useCallback(
     (name, value) => {
       const params = new URLSearchParams(searchParams.toString());
-      params.set(name, value);
+
+      if (value) {
+        params.set(name, value);
+      } else {
+        params.delete(name);
+      }
+
       return params.toString();
     },
     [searchParams]
@@ -48,12 +54,19 @@ export function AutocompleteInput({
     }
   };
 
+  const handleChange = (e) => {
+    setQuery(e.target.value);
+
+    if (e.target.value.trim() === "") {
+      const updatedQueryString = createQueryString(`scopes[${label}]`, "");
+      router.push(`${pathname}?${updatedQueryString}`);
+    }
+  };
+
   useEffect(() => {
     if (query.trim() === "") {
       setSuggestions([]);
       setShowDropdown(false);
-      const newQueryString = createQueryString(`scopes[${label}]`, "");
-      router.push(`${pathname}?${newQueryString}`);
       return;
     }
 
@@ -77,12 +90,12 @@ export function AutocompleteInput({
   }, [debouncedQuery, apiEndpoint]);
 
   return (
-    <div className="relative w-full md:w-48">
+    <div className="relative w-full md:w-64">
       <label className="block mb-1 text-gray-600">{label}</label>
       <input
         type="text"
         value={query}
-        onChange={(e) => setQuery(e.target.value)}
+        onChange={handleChange}
         ref={inputRef}
         onBlur={handleBlur}
         className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
