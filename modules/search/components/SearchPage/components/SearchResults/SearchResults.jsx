@@ -5,7 +5,7 @@ import { useToggle } from "@/modules/shared/hooks";
 import { SearchResultCardList } from "../SearchResultCardList";
 
 function SearchResults({ results }) {
-  const [isRowList, toggler] = useToggle(false);
+  const [isRowList, toggler] = useToggle(true);
 
   return (
     <div>

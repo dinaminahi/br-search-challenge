@@ -1,9 +1,37 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { formatDateRange } from "@/modules/shared/utils/jsUtils";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 function SearchResultRow({ item }) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const createQueryString = useCallback(
+    (name, value) => {
+      const params = new URLSearchParams(searchParams.toString());
+
+      if (value) {
+        params.set(name, value);
+      } else {
+        params.delete(name);
+      }
+
+      return params.toString();
+    },
+    [searchParams]
+  );
+
+  const navigateToItem = () => {
+    const updatedQueryString = createQueryString(`retreat_id`, item.id);
+    router.push(`${pathname}?${updatedQueryString}`);
+  };
+
   return (
-    <li className="flex flex-col md:flex-row justify-between gap-6 border border-gray-200 rounded-lg p-4">
+    <li
+      onClick={navigateToItem}
+      className="flex flex-col md:flex-row justify-between gap-6 border border-gray-200 rounded-lg p-4"
+    >
       <img
         src={
           "https://bookretreats.com/cdn-cgi/image/width=1200,quality=65,f=auto,sharpen=1,fit=cover,gravity=auto" +
